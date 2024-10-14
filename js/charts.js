@@ -35,12 +35,18 @@ function createAuditRatioGraph(user) {
         .attr("transform", "translate(-10,0)rotate(-45)")
         .style("text-anchor", "end");
 
-    const y = d3.scaleLinear()
+        const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.value)])
         .range([height, 0]);
-
+    
     svg.append("g")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y)
+            .tickFormat(d => {
+                const scaled = d / 1000;
+                return scaled >= 1 ? scaled.toFixed(0) : scaled.toFixed(1);
+            })
+        );
+    
 
     const color = d3.scaleOrdinal()
         .domain(["Done", "Received"])

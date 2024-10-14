@@ -36,7 +36,6 @@ function displayAudits(audits) {
  
   auditsDiv.innerHTML = '<h3>Your Audits</h3>' +
     '<p>Here you can find back all your audits : the ones you have to make and the ones you\'ve already made for other students projects.</p>' +
-    '<p>For the audits you have to do, hover the block to get the verification code you\'ll need to complete the audit on your classmate computer.</p>' +
     completedAudits.map(audit => `
       <div class="audit-item">
         <p><strong>${audit.group.object.name}—${audit.group.captainLogin}</strong></p>
