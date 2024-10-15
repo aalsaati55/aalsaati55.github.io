@@ -51,7 +51,7 @@ function displayProgress(progresses) {
   const progressDiv = document.getElementById('progress');
   const visibleProgresses = progresses.filter(p => p.grade >= 1);
   
-  progressDiv.innerHTML = '<h3>Projects and Piscine Completion</h3>' +
+  progressDiv.innerHTML = '<h3>Projects Completion</h3>' +
     visibleProgresses.slice(0, 1000).map(p => `
       <div class="progress-item">
         <p><strong>${p.object.name}</strong></p>

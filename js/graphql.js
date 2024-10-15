@@ -49,7 +49,7 @@ async function fetchUserProfile() {
           }
         }
       }
-      progresses(where: { userId: { _eq: $userId }, object: { type: { _in: ["project", "piscine"] } } }, order_by: {updatedAt: desc}) {
+      progresses(where: { userId: { _eq: $userId }, object: { type: { _eq: "project" } } }, order_by: {updatedAt: desc}) {
         id
         object {
           id
