@@ -33,7 +33,8 @@ function createAuditRatioGraph(user) {
         .call(d3.axisBottom(x))
         .selectAll("text")
         .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
+        .style("text-anchor", "end")
+        .style("fill", "var(--text-color)");
 
         const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.value)])
@@ -45,7 +46,10 @@ function createAuditRatioGraph(user) {
                 const scaled = d / 1000;
                 return scaled >= 1 ? scaled.toFixed(0) : scaled.toFixed(1);
             })
-        );
+        )
+        .selectAll("text")
+        .style("fill", "var(--text-color)");
+    
     
 
     const color = d3.scaleOrdinal()
@@ -67,27 +71,29 @@ function createAuditRatioGraph(user) {
 
 
     svg.selectAll(".label")
-        .data(data)
-        .enter()
-        .append("text")
-        .attr("class", "label")
-        .attr("x", d => x(d.name) + x.bandwidth() / 2)
-        .attr("y", d => y(d.value) - 5)
-        .attr("text-anchor", "middle")
-        .text(d => {
-            const valueInMB = d.value / 1000000;
-            if (valueInMB < 1) {
-                return `${valueInMB.toFixed(3)} MB`;
-            } else {
-                return `${valueInMB.toFixed(2)} MB`;
-            }
-        });
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "label")
+      .attr("x", d => x(d.name) + x.bandwidth() / 2)
+      .attr("y", d => y(d.value) - 5)
+      .attr("text-anchor", "middle")
+      .style("fill", "var(--text-color)")
+      .text(d => {
+          const valueInMB = d.value / 1000000;
+          if (valueInMB < 1) {
+              return `${valueInMB.toFixed(3)} MB`;
+          } else {
+              return `${valueInMB.toFixed(2)} MB`;
+          }
+      });
       
-        auditContainer.append("div")
-        .style("text-align", "center")
-        .style("margin-top", "10px")
-        .style("font-size", "16px")
-        .text(`Audit Ratio: ${user.auditRatio.toFixed(1)}`);
+    auditContainer.append("div")
+      .style("text-align", "center")
+      .style("margin-top", "10px")
+      .style("font-size", "16px")
+      .style("color", "var(--text-color)")
+      .text(`Audit Ratio: ${user.auditRatio.toFixed(1)}`);
     
     console.log('Audit ratio graph created');
 }
@@ -160,19 +166,20 @@ function createSkillsPieChart(skills) {
   
     arcs.append("text")
       .attr("transform", d => {
-        const pos = labelArc.centroid(d);
-        const midAngle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        pos[0] = radius * 1.1 * (midAngle < Math.PI ? 1 : -1);
-        return `translate(${pos})`;
+          const pos = labelArc.centroid(d);
+          const midAngle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+          pos[0] = radius * 1.1 * (midAngle < Math.PI ? 1 : -1);
+          return `translate(${pos})`;
       })
       .attr("dy", ".35em")
       .style("text-anchor", d => {
-        const midAngle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        return midAngle < Math.PI ? "start" : "end";
+          const midAngle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+          return midAngle < Math.PI ? "start" : "end";
       })
       .text(d => d.data.type.replace('skill_', ''))
       .style("font-size", "14px")
-      .style("fill", "#333");
+      .style("fill", "var(--text-color)");
+  
   
     arcs.append("polyline")
       .attr("points", d => {
